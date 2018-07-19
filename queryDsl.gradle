@@ -1,0 +1,29 @@
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+def mongoVersion = "4.2.1"
+def queryDslOutputDir = "src/main/generated"
+
+sourceSets {
+    main {
+        java {
+            srcDirs += queryDslOutputDir
+        }
+    }
+}
+
+idea {
+    module {
+        generatedSourceDirs += queryDslOutputDir
+    }
+}
+
+querydsl {
+    springDataMongo = true
+    querydslDefault = true
+    querydslSourcesDir = queryDslOutputDir
+}
+
+dependencies {
+    compile("com.querydsl:querydsl-mongodb:${mongoVersion}")
+    compileOnly("com.querydsl:querydsl-apt:${mongoVersion}")
+}
